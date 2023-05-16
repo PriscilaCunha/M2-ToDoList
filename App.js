@@ -7,7 +7,7 @@ const Task = (props) => {
       <Text style={styles.taskId}>{props.id}</Text>
       <Text style={styles.taskDescription}>{props.description}</Text>
 
-      <Button title='Done' />
+      <Button title='Done' onPress={props.done} />
     </View>
   )
 }
@@ -16,6 +16,11 @@ export default function App() {
 
   const [tasks, setTasks] = React.useState([])
   const [text, setText] = React.useState("")
+
+  const finishTask = (id) => {
+    tasks.splice(id, 1)
+    setTasks([...tasks])
+  }
 
   return (
     <View style={styles.container}>
@@ -30,7 +35,7 @@ export default function App() {
       <Text style={styles.title}>List of Tasks</Text>
 
       <ScrollView>
-        {tasks.map((task, index) => <Task key={index} id={index} description={task} />)}        
+        {tasks.map((task, index) => <Task key={index} id={index} description={task} done={() => finishTask(index)} />)}        
       </ScrollView>
     </View>
   );
